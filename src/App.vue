@@ -9,6 +9,7 @@
 // import storage from './storage'v
 import axios from 'axios'
 import Vue from 'vue'
+// import jsonp from 'jsonp'
 
 Vue.prototype.axios = axios
 
@@ -21,10 +22,19 @@ export default {
       // 在data中不写数据res:{},在mounted里写
       // this.res = res,不能进行数据代理,Vue插件
       // 不能监测到
-      res:{}
+      res:{},
+      // age:30,
+      // data:''
     }
   },
   mounted() {
+    // 接口代理
+    // let url = "/api/servicetime";
+    // jsonp(url,(err,res)=>{
+    //   let result = res;
+    //   this.data = result;
+    // });
+
     // 第一种mock方法，本地加载请求静态json文件的形式
     // this.axios.get('/mock/user/login.json').then((res)=>{
     //   this.res = res
@@ -38,20 +48,13 @@ export default {
     // 第三种mock方式，本地集成mockjs插件实现数据mock,
     // 用js实现的插件库，可以实现拦截数据、请求，但其本质
     // 上没有发真正的请求,而是在代码上就拦截到了数据
-    this.axios.get('/user/login').then((res)=>{
-      this.res = res
-    })  
+    // this.axios.get('/user/login').then((res)=>{
+    //   this.res = res
+    // })  
     }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import './assets/scss/reset.scss';
 </style>

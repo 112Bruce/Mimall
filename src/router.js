@@ -41,13 +41,13 @@ export default new Router({
                     },
                 {
                     // 动态路由
-                    path:'detail',
+                    path:'detail/:id',
                     // 加载home组件
                     name:'detail',
                     component: Detail, 
                 },
                 {
-                    path:'product',
+                    path:'product/:id',
                     // 加载home组件
                     name:'product',
                     component: Product, 

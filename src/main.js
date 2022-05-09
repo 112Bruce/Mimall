@@ -34,7 +34,7 @@ axios.defaults.baseURL = '/api'
 axios.defaults.timeout = 7000
 
 // 第三种mock方式,本地集成mockjs插件,需要添加一个开关
-const mock = true
+const mock = false
 if(mock){
   // import是预编译加载
   // require是执行时才加载,如果mock是false,不会加载

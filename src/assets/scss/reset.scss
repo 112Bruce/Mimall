@@ -1,0 +1,26 @@
+// scss的好处：可以预编译，可以提前定义变量，通过
+// 加载变量的方式去动态实现样式的功能
+body,div,p,h1,h2,h3,h4,h5,h6,ul,li,dl,dt,a,input,button,textarea,select{
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+html,body{
+  font-family:Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif;
+  color: #333333;
+  background-color: #ffffff;
+  min-width: 1226px;
+  font-size: 12px;
+}
+a{
+  text-decoration: none;
+}
+ul,li{
+  list-style: none;
+}
+input{
+  font: normal;
+}
+input:focus,a:focus{
+  outline: none;
+}
