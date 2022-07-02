@@ -1,10 +1,10 @@
 // flex布局复用
 @mixin flex($hov:space-between,$col:center){
-    display: flex;
+    display:flex;
     // 均匀排列每个元素，首个元素放置于起点，末尾元素放置于终点
-    justify-content: $hov;
+    justify-content:$hov;
     // 垂直方向居中
-    align-items: $col;
+    align-items:$col;
 }
 
 // 小图片图片复用
@@ -14,4 +14,24 @@
     height:$h;
     background:url($img) no-repeat center;
     background-size:$size;
+}
+
+// 开启定位
+@mixin position($pos:absolute,$top:0px,$left:0px,$w:100%,$h:100%){
+    position:$pos;
+    top:$top;
+    left:$left;
+    width:$w;
+    height:$h;
+}
+
+// 定位图片
+@mixin positionImg($pos:absolute,$top:0px,$right:0px,$w:100%,$h:100%,$img:''){
+    position:$pos;
+    top:$top;
+    right:$right;
+    width:$w;
+    height:$h;
+    background:url($img) no-repeat center;
+    background-size:contain;
 }

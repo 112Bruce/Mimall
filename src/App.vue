@@ -15,19 +15,22 @@ Vue.prototype.axios = axios
 
 export default {
   name: 'App',
-
+  // data声明为对象，是全局声明，声明为函数，是局部声明，全局声明会
+  // 污染数据
   data(){
     return{
       // 忘记写res:{}了,所以mockjs没有拦截数据
       // 在data中不写数据res:{},在mounted里写
       // this.res = res,不能进行数据代理,Vue插件
       // 不能监测到
-      res:{},
+      // res:{},
       // age:30,
       // data:''
     }
   },
   mounted() {
+    this.getUser();
+    this.getCartCount();
     // 接口代理
     // let url = "/api/servicetime";
     // jsonp(url,(err,res)=>{
@@ -51,10 +54,27 @@ export default {
     // this.axios.get('/user/login').then((res)=>{
     //   this.res = res
     // })  
+    },
+    methods:{
+      getUser(){
+        this.axios.get('/user').then((res)=>{
+          // to-do 保存到vuex中
+          this.$store.dispatch('saveUserName',res.username)
+        })
+      },
+      getCartCount(){
+        // 从服务器接口获取数据
+        this.axios.get('/carts/products/sum').then((res)=>{
+          // to-do 保存到vuex中
+          this.$store.dispatch('saveCartCount',res)
+        })
+      }
     }
 }
 </script>
 
-<style>
+<style lang="scss">
   @import './assets/scss/reset.scss';
+  @import './assets/scss/config.scss';
+  @import './assets/button.scss';
 </style>

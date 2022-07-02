@@ -33,7 +33,7 @@
                     <!-- target="_blank"在当前窗口打开新窗口 -->
                     <a :href="'/#/product/' + item.id" target="_blank">
                       <div class="pro-img">
-                        <img :src="item.mainImage" alt="item.subtitle">
+                        <img v-lazy="item.mainImage" alt="item.subtitle">
                       </div>
                       <div class="pro-name">{{item.name}}</div>
                       <div class="pro-price">{{item.price | currency}}</div>
@@ -54,7 +54,7 @@
                     <!-- target="_blank"在当前窗口打开新窗口 -->
                     <a href="" target="_blank">
                       <div class="pro-img">
-                        <img src="../imgs/nav-img/nav-3-1.jpg" alt="">
+                        <img v-lazy="'../imgs/nav-img/nav-3-1.jpg'" alt="">
                       </div>
                       <div class="pro-name">小米壁画电视 65英寸</div>
                       <div class="pro-price">6999元</div>
@@ -63,7 +63,7 @@
                    <li class="product">
                      <a href="" target="_blank">
                       <div class="pro-img">
-                        <img src="../imgs/nav-img/nav-3-2.jpg" alt="">
+                        <img v-lazy="'../imgs/nav-img/nav-3-2.jpg'" alt="">
                       </div>
                       <div class="pro-name">小米全面屏电视E55A</div>
                       <div class="pro-price">1999元</div>
@@ -72,7 +72,7 @@
                    <li class="product">
                      <a href="" target="_blank">
                       <div class="pro-img">
-                        <img src="../imgs/nav-img/nav-3-3.png" alt="">
+                        <img v-lazy="'../imgs/nav-img/nav-3-3.png'" alt="">
                       </div>
                       <div class="pro-name">小米电视4A 32英寸</div>
                       <div class="pro-price">699元</div>
@@ -81,7 +81,7 @@
                    <li class="product">
                      <a href="" target="_blank">
                       <div class="pro-img">
-                        <img src="../imgs/nav-img/nav-3-4.jpg" alt="">
+                        <img v-lazy="'../imgs/nav-img/nav-3-4.jpg'" alt="">
                       </div>
                       <div class="pro-name">小米电视4A 55英寸</div>
                       <div class="pro-price">1799元</div>
@@ -90,7 +90,7 @@
                    <li class="product">
                      <a href="" target="_blank">
                       <div class="pro-img">
-                        <img src="../imgs/nav-img/nav-3-5.jpg" alt="">
+                        <img v-lazy="'../imgs/nav-img/nav-3-5.jpg'" alt="">
                       </div>
                       <div class="pro-name">小米电视4A 65英寸</div>
                       <div class="pro-price">2699元</div>
@@ -99,7 +99,7 @@
                    <li class="product">
                      <a href="" target="_blank">
                       <div class="pro-img">
-                        <img src="../imgs/nav-img/nav-3-6.png" alt="">
+                        <img v-lazy="'../imgs/nav-img/nav-3-6.png'" alt="">
                       </div>
                       <div class="pro-name">小米CC9</div>
                       <div class="pro-price">1799元</div>
@@ -121,14 +121,27 @@
 </template>
 
 <script>
+
+import {mapState} from 'vuex'
 export default {
     name:'nav-header',
     data(){
       return{
-        username:'',
-        phoneList:[]
+        phoneList:[],
+        // username:''
       }
     },
+    computed:{
+      // username(){
+      //   return this.$store.state.username;
+      // },
+      // cartCount(){
+      //   return this.$store.state.cartCount;
+      // }
+
+      ...mapState(['username','cartCount'])
+    },
+    // 过滤器
     filters:{
       currency(val){
         if(!val) return '0.00';
@@ -152,11 +165,13 @@ export default {
         this.axios.get('/products',{
           // get传参
           params:{
-            categoryID:"100012"
+            categoryID:"100012",
+            // 一页是6条数据
+            // pageSize:6
           }
         }).then((res)=>{
           if(res.list.length>6){
-            // slice，左闭右开
+            // slice，左闭右开，截取数组里的数据，从左索引到右索引
             this.phoneList = res.list.slice(4,10);
           }
         });
@@ -165,11 +180,11 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 // 导入样式文件
-@import '../assets/base.scss';
-@import '../assets/mixin.scss';
-@import '../assets/scss/config.scss';
+@import './../assets/base.scss';
+@import './../assets/mixin.scss';
+@import './../assets/scss/config.scss';
 
   .header{
     .nav-topbar{
@@ -189,6 +204,7 @@ export default {
           background-color:#FF6600;
           text-align:center;
           color:#ffffff;
+          margin-right: 0px;
           .icon-cart{
             @include bgImg(16px,12px,'../imgs/icon-cart-checked.png');
             text-align:center;
@@ -251,6 +267,10 @@ export default {
               .children{
                 height: 220px;
                 opacity: 1;
+                // border-top的定义应该写在鼠标移入后的.children里面
+                // 而不是下面的.children里面，否则就会出现笔记.mk的问题1
+                border-top: 1px solid #e5e5e5;
+                background-color: #ffffff
               };
             };
             .children{
@@ -262,7 +282,6 @@ export default {
               opacity: 0;
               // 隐藏
               overflow: hidden;
-              border-top: 1px solid #e5e5e5;
               box-shadow: 0px 7px 6px 0px rgba(0,0,0,0.11);
               z-index: 10;
               // 给高度做动画效果，不知道的话可以用all

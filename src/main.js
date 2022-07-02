@@ -1,6 +1,10 @@
 // 先执行main.js文件,然后再执行app.vue文件
 
 
+// ctrl + p : 快速查找并跳转页面
+// ctrl + d 选中多个
+
+
 // 从main.js中引入node_modules中的文件可以省略前面的
 // ../node_modules/
 // import Vue from 'vue' 中的第一个Vue的名字可以随便起，
@@ -10,10 +14,12 @@ import router from './router'
 import axios from 'axios'
 // import VueAxios from 'vue-axios'
 import VueLazyLoad from 'vue-lazyload'
+// 用来保存数据
 import VueCookie from 'vue-cookie'
 import { Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // ./ 表示当前目录，没有 ./ ,会认为是一个插件
+// 导入store实际上是使用Vuex
 import store from './store'
 import App from './App.vue'
 // import env from './env'
@@ -45,7 +51,9 @@ if(mock){
 // 接口错误响应拦截
 axios.interceptors.response.use(function(response){
   // 获取接口返回的值
-  let res = response.data
+  let res = response.data;
+  // 获取路由地址
+  let path = location.hash;
   // 状态码为0，成功
   if(res.status == 0){
     return res.data
@@ -56,14 +64,20 @@ axios.interceptors.response.use(function(response){
     // 因为它的this不指向vue实例
 
     // # 是哈希路由
-    window.location.href = '/#/login'
+    // 是首页的话，不跳转到登录界面
+    if(path !='#/index'){
+      window.location.href = '/#/login'
+    };
   }else{
-    alert(res.msg)
+    alert(res.msg);
+    // 抛出错误
+    return Promise.reject(res);
   }
 })
 
 Vue.use(VueCookie)
-Vue.use(VueLazyLoad)
+// 图片懒加载插件
+Vue.use(VueLazyLoad,{loading:''})
 Vue.use(store)
 Vue.use(router)
 
@@ -73,6 +87,8 @@ Vue.prototype.$message = Message
 
 
 new Vue({
+  //ES6简写 router:router => router
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

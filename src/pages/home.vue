@@ -13,6 +13,7 @@
 <template>
   <div>
       home
+      <!-- 组件标签的名字就是 export default 中的 name -->
       <nav-header></nav-header>
       <router-view></router-view>
       <nav-footer></nav-footer>

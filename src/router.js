@@ -14,6 +14,7 @@ import OrderConfirm from './pages/orderConfirm'
 import OrderList from './pages/orderList'
 import OrderPay from './pages/orderPay'
 import AliPay from './pages/aliPay'
+import Login from './pages/login'
 
 // 必须要在路由文件中使用vue.use(VueRouter),否则渲染不出
 // pages中的vue的内容
@@ -23,9 +24,11 @@ export default new Router({
     routes:[
         {
             // '/' 表示父路由
+            // 如果路径是 /
             path:'/',
             // 加载home组件
             name:'home',
+            // 则给你看Home组件
             component: Home,
             // 默认跳转到 /index
             redirect: '/index',
@@ -57,6 +60,14 @@ export default new Router({
 
         {
             // '/' 表示父路由
+            path:'/login',
+            // 加载login组件
+            name:'login',
+            component: Login,
+        },
+
+        {
+            // '/' 表示父路由
             path:'/cart',
             // 加载home组件
             name:'cart',
@@ -76,7 +87,7 @@ export default new Router({
                     // 加载home组件
                     name:'order-list',
                     component: OrderList, 
-                    },
+                },
                 {
                     // 动态路由
                     path:'confirm',
