@@ -253,23 +253,29 @@ export default {
     },
     mounted(){
       this.Init();
-      console.log('this.$store是' + this.$store);
     },
     methods:{
       goToCart(){
         // 跳转到 /cart 路由
         this.$router.push('/cart');
       },
-      addCart(){
-        this.showModal = true;
-        // this.axios.post('/carts',{
-        //   productId:id,
-        //   selected: true
-        // }).then(() => {
+      addCart(id){
+        // Modal弹框动画
+        // this.showModal = true;
 
-        // }).catch(() =>{
-        //   this.showModal = true
-        // })
+        this.axios.post('/carts',{
+          productId:id,
+          selected: true
+        }).then((res) => {
+          // 添加购物车且成功获取服务端数据，弹框
+          this.showModal = true;
+          // 将购物车总数量上传至vuex（更新购物车总数量），方便所有组件获取
+          // this.$store.dispatch(saveCartCount,res.cartTotalQuantity)
+          // saveCartCount是一个函数，必须写上''
+          this.$store.dispatch('saveCartCount',res.cartTotalQuantity);
+        }).catch(() =>{
+          this.showModal = true
+        })
       },
       Init(){
         this.axios.get('/products',{

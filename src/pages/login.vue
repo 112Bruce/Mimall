@@ -51,34 +51,53 @@ export default {
       }
 
     },
-    mounted(){
-
-    },
     methods:{
       login(){
         // 解构赋值
         let { username,password } = this;
-        // 从服务器获取数据，表单请求，首选post
+        // 将数据上传到服务器，表单请求，首选post
         this.axios.post('/user/login',{
           username,
           password
         }).then(res=>{
           // 用vue-cookie保存用户名,第一个参数：key值，第二个参数：
-          // value值，第三个参数：期限值，到期就会清除 1M:一个月
-          this.$cookie.set('userId',res.id,{expires: '1M'});
-          // this.$store.dispatch('saveUserName',username);
-          this.saveUserName(res.username);
-          this.$router.push('/index');
+          // value值，第三个参数：期限值，到期就会清除 1M:一个月,
+          // Session:会话级,只有退出浏览器cookie的值才会消失(必须
+          // 是右键浏览器小图标,点击退出才行)
+          this.$cookie.set('userId',res.id,{expires: 'Session'});
+
+          // 将数据发送给vuex
+          this.$store.dispatch('saveUserName',username);
+
+          // 登录成功，跳转回首页
+          /*
+          query传参(post传参)用name，params传参(get传参)
+          用path.（所以router.js文件中既配置了name，又配置
+          了path。name没有'/'，比如 name:'index', 
+          path:'/index'）
+          */
+          // this.$router.push('/index');
+          // 在跳转路由里传参，方便第二次登录时判断是否再次
+          // 获取购物车信息
+          this.$router.push({
+            name: 'index',
+            params:{
+              from: 'login',
+            }
+          })
+          this.$message.success('登录成功');
+        }).catch(()=>{
+          this.$message.success('密码或账号错误');
         })
       },
       register(){
-        // 从服务器获取数据，表单请求，首选post
+        // 将数据上传到服务器，表单请求，首选post
         this.axios.post('/user/login',{
           username:'admin1',
           password:'admin1',
           email:'admin1@qq.com'
         }).then(()=>{
-          alert('注册成功');
+          this.$message.success('注册成功');
         })
       }
     }

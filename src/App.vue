@@ -29,8 +29,15 @@ export default {
     }
   },
   mounted() {
-    this.getUser();
-    this.getCartCount();
+    // 如果没有登录,则没有必要获取后端数据,在login.vue中
+    // 我们用cookie设置了一个前端userId,且在NavHeader.vue
+    // 中我们退出登录时,将其设置为了空,因此可以通过userId
+    // 判断有没有登录
+    if(this.$cookie.get('userId')){
+      this.getUser();
+      this.getCartCount();
+    }
+    
     // 接口代理
     // let url = "/api/servicetime";
     // jsonp(url,(err,res)=>{

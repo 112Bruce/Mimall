@@ -12,16 +12,14 @@
 </template>
 
 <script>
-import NavHeader from './../components/NavHeader'
-import NavFooter from './../components/NavFooter'
+
 export default {
     // name，vue组件的名字
     name:'service-bar',
     components:{
         // Swiper,
         // SwiperSlide,
-        NavHeader,
-        NavFooter
+
     },
     data(){
         return{

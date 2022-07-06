@@ -7,9 +7,9 @@ Vue.use(Vuex);
 
 const state = {
     // 登录用户名
-    username:'11bruce',
+    username:'',
     // 购物车商品数量
-    cartCount:-1
+    cartCount:0
 };
 // store首字母必须大写，否则报错
 export default new Vuex.Store({

@@ -13,8 +13,9 @@
             <!-- javascript:; 防止刷新 -->
             <a href="javascript:;" v-if="username">{{username}}</a>
             <a href="javascript:;" v-if="!username" @click="login">登录</a>
+            <a href="javascript:;" v-if="username" @click="logout">退出</a>
             <a href="javascript:;" v-if="username">我的订单</a>
-            <a href="javascript:;" class="my-cart" @click="gotoCart"><span class="icon-cart"></span>购物车</a>
+            <a href="javascript:;" class="my-cart" @click="gotoCart"><span class="icon-cart"></span>购物车{{cartCount}}</a>
           </div>
         </div>
       </div>
@@ -138,7 +139,8 @@ export default {
       // cartCount(){
       //   return this.$store.state.cartCount;
       // }
-
+      
+      // 等同于上面的两个函数，从vuex中获取数据
       ...mapState(['username','cartCount'])
     },
     // 过滤器
@@ -151,15 +153,45 @@ export default {
     mounted(){
       // 不能少this
       this.getProductList();
+
+      // 为了登录后能保存上次登录的购物信息
+      // 前面login.vue文件中的login()函数成功时
+      // 会跳转路由,并在路由中的params中传了参数from
+
+      // 通过传参判断以前是否登录过,从而获取购物车信息,
+      // 减少了请求,优化了项目
+      if(this.$route.params && this.$route.params.from == 'login'){
+        this.getCartCount();
+      }
     },
     methods:{
       login(){
         // 跳转路由
         this.$router.push('/login');
       },
+      logout(){
+        this.axios.post('/user/logout').then(()=>{
+          // 用vue-cookie保存用户名,第一个参数：key值，第二个参数：
+          // value值，第三个参数：期限值，到期就会清除 1M:一个月,
+          // -1:即刻过期 
+          this.$cookie.set('userId','',{expires: '-1'});
+          this.$store.dispatch('saveUserName','');
+          this.$store.dispatch('saveCartCount',0);
+          this.$message.success('退出成功');
+
+        })
+      },
       gotoCart(){
         // 跳转路由
         this.$router.push('/cart');
+      },
+      // 获取购物车数量
+      getCartCount(){
+        // 从服务器接口获取数据
+        this.axios.get('/carts/products/sum').then((res)=>{
+          // to-do 保存到vuex中
+          this.$store.dispatch('saveCartCount',res)
+        })
       },
       getProductList(){
         this.axios.get('/products',{
@@ -218,35 +250,6 @@ export default {
         position:relative;
         height: 112px;
         @include flex();
-        // 类选择器名字写错没选中
-        .header-logo{
-          display: inline-block;
-          width: 55px;
-          height: 55px;
-          background-color: #FF6600;
-          a{
-            display: inline-block;
-            width: 110px;
-            height: 55px;
-            // scss中生成伪类的方式
-            &:before{
-              // 占位符，必须有，否则不能生成伪类
-              content: ' ';
-              @include bgImg(55px,55px,'../imgs/mi-logo.png',55px);
-              transition: margin 0.2s;
-            };
-            &:after{
-              // 占位符，必须有，否则不能生成伪类
-              content: ' ';
-              @include bgImg(55px,55px,'../imgs/mi-home.png',55px);
-            };
-            &:hover:before{
-              margin-left: -55px;
-              // transition：动画过渡
-              transition: margin 0.2s;
-            }
-          }
-        };
         .header-menu{
           display: inline-block;
           width: 643px;

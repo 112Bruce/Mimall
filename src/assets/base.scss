@@ -1,3 +1,5 @@
+@import '../assets/mixin.scss';
+
 .container{
     position:relative;
     width:1226px;
@@ -18,3 +20,50 @@ input{
     box-sizing: border-box;
     font-size: 14px;
 }
+.fl{
+    float:left;
+};
+
+.fr{
+    float:right;
+};
+
+.clearfix:before,.clearfix:after{
+    content: ' ';
+    display: table;
+}
+
+.clearfix:after{
+    clear: both;
+}
+
+// 公共logo
+       // 类选择器名字写错没选中
+       .header-logo{
+        display: inline-block;
+        width: 55px;
+        height: 55px;
+        background-color: #FF6600;
+        a{
+          display: inline-block;
+          width: 110px;
+          height: 55px;
+          // scss中生成伪类的方式
+          &:before{
+            // 占位符，必须有，否则不能生成伪类
+            content: ' ';
+            @include bgImg(55px,55px,'../imgs/mi-logo.png',55px);
+            transition: margin 0.2s;
+          };
+          &:after{
+            // 占位符，必须有，否则不能生成伪类
+            content: ' ';
+            @include bgImg(55px,55px,'../imgs/mi-home.png',55px);
+          };
+          &:hover:before{
+            margin-left: -55px;
+            // transition：动画过渡
+            transition: margin 0.2s;
+          }
+        }
+      };

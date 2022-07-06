@@ -26,4 +26,28 @@
 9、登录与注册页面的账号与密码无法正常使用
 
 10、8-4 slide动画：点击背景图片，不弹出视频。
-解答：因为有一个元素是fixed定位，其长宽撑满了整个视屏窗口，且其z-index大，挡住了其他所有的标签元素。
+解答：因为有一个元素是fixed定位，其长宽撑满了整个视屏窗口，且其z-index大，挡住了其他所有的标签元素。所以只需将其取消fixed定位即可。
+
+11、在style标签中加入scoped会生成一堆无用的标签，很麻烦
+
+12、路径多了s是服务器路径，否则是我们自己设计的路由，比如：/products：服务器路径, /product：路由路径
+
+13、Vuex无法监听数据变化？
+解答： this.$store.dispatch(saveCartCount,res.cartTotalQuantity); saveCartCount是一个函数，必须写上''，即''this.$store.dispatch('saveCartCount',res.cartTotalQuantity); 
+       
+14、按需引入与按需加载的区别
+我们把一个框架只引入我们想要的插件，但是打包的时候，还是会将整个框架打包。按需加载真的只会将我们需要（用到）的插件打包
+
+15、ElmentUI中插件与组件的区别：插件可以弹框，即有交互功能
+
+16、src文件夹下的属于项目内的文件，会实时编译，而其他文件不属于项目内，当改变时，需要重启服务器进行编译，即npm run serve
+
+17、query传参(post传参)用name，params传参(get传参)用path.（所以router.js文件中既配置了name，又配置了path。name没有'/'，比如 name:'index', path:'/index'）
+
+18、获取参数用route，跳转路由用router, this.$router.push('/detail'), this.$route.params.参数名。
+
+19、优化思路一：屏蔽掉没有必要调用的接口（视频11-4节）
+
+20 ctrl + x:剪切
+
+21:

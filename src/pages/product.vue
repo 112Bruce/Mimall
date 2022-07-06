@@ -2,10 +2,10 @@
   <div class="product">
       <!-- 放上组件标签（product-param） -->
       <product-param>
-        <!-- vue3.0最新语法 -->
+        <!-- vue3.0最新语法 v-slot:buy-->
         <template v-slot:buy>
           <a href="javascript:;">
-            <button class="btn">立即购买</button>
+            <button class="btn" @click="buy">立即购买</button>
           </a>
         </template>
       </product-param>
@@ -94,12 +94,17 @@ export default {
     },
     data(){
       return {
+        id: this.$route.params.id,
         // transition动画
         // showSlide: false,
 
         // animation动画
         showSlide:'',
 
+        // 商品信息
+        product:{},
+
+        // vue-awesome-swiper轮播
         swiperOption:{
           autoplay:true,
           slidesPerView:3,
@@ -111,6 +116,12 @@ export default {
           }
         }
       }
+    },
+    mounted(){
+      // 将从服务器拿到的参数动态赋值给子组件ProductParam.vue中标签的内容
+      // 用props实现父组件向子组件传递数据，并在子组件的data中声明相应变量，
+      // 并赋值为父组件收到的参数（age: this.age）
+      this.getProductInfo();
     },
     methods: {
       videoPause(pause){
@@ -126,7 +137,19 @@ export default {
           video.play();
         }
       },
-
+      getProductInfo(){
+        // 参数用的是route，路由用的是router
+        console.log(this.id);
+        // ``:反引号，ES6语法，动态id(id值是变量)
+        // 路径多了s是服务器路径，否则是我们自己设计的路由
+        this.axios.get(`/products/${this.id}`).then((res)=>{
+          this.product = res;
+        })
+      },
+      buy(){
+        // 动态绑定id，里面必须是{}，而不是().
+        this.$router.push(`/detail/${this.id}`);
+      }
     },
 }
 </script>
@@ -134,6 +157,9 @@ export default {
 <style lang="scss">
   @import './../assets/mixin.scss';
   .product{
+    .btn{
+      margin-left: 10px;
+    };
     .content{
       .item-bg{
         background:url('../imgs/product/product-bg-1.png') no-repeat center;
@@ -223,6 +249,7 @@ export default {
           }
 
           // 定义animation动画，@keyframes固定用法
+          // 动画必须成对出现
           // slideDown:动画名
           @keyframes slideDown {
             from{
@@ -292,12 +319,9 @@ export default {
               height:100%;
               object-fit:cover;
               outline:none;
-            }
+            };
           }
         }
-    .btn{
-      margin-left: 10px;
-    };
-  }
+    }
   }
 </style>

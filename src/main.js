@@ -17,6 +17,7 @@ import VueLazyLoad from 'vue-lazyload'
 // 用来保存数据
 import VueCookie from 'vue-cookie'
 import { Message } from 'element-ui'
+// 一定要引入这个样式，否则eliment-ui无效
 import 'element-ui/lib/theme-chalk/index.css'
 // ./ 表示当前目录，没有 ./ ,会认为是一个插件
 // 导入store实际上是使用Vuex
@@ -64,11 +65,15 @@ axios.interceptors.response.use(function(response){
     // 因为它的this不指向vue实例
 
     // # 是哈希路由
-    // 是首页的话，不跳转到登录界面
+    // 不是首页的话，跳转到登录界面
     if(path !='#/index'){
-      window.location.href = '/#/login'
-    };
+      window.location.href = '/#/login';
+    }
+    // 所有的状态都有返回结果，只有0成功才不抛出错误，抛出
+    // 错误才会使调用axios不成功时进入.catch()函数
+    return Promise.reject(res); 
   }else{
+    this.$message.error(res.msg)
     alert(res.msg);
     // 抛出错误
     return Promise.reject(res);
