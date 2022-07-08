@@ -44,10 +44,10 @@
 
 17、query传参(post传参)用name，params传参(get传参)用path.（所以router.js文件中既配置了name，又配置了path。name没有'/'，比如 name:'index', path:'/index'）
 
+18、17是错误的，get和post都可以用query, params, name, path
+
 18、获取参数用route，跳转路由用router, this.$router.push('/detail'), this.$route.params.参数名。
 
 19、优化思路一：屏蔽掉没有必要调用的接口（视频11-4节）
 
 20 ctrl + x:剪切
-
-21:

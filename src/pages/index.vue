@@ -273,8 +273,9 @@ export default {
           // this.$store.dispatch(saveCartCount,res.cartTotalQuantity)
           // saveCartCount是一个函数，必须写上''
           this.$store.dispatch('saveCartCount',res.cartTotalQuantity);
+          // this.$message.success('添加成功');
         }).catch(() =>{
-          this.showModal = true
+          this.$message.warning('您可能还未登录，请先去登录');
         })
       },
       Init(){
