@@ -219,6 +219,8 @@ export default {
                orderNo: res.orderNo,
              }
            })
+        }).catch(()=>{
+          this.$message.warning('商品不能为空');
         });
       },
       // 关闭Modal

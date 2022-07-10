@@ -56,6 +56,9 @@ export default {
             }else if(path == '/order/pay'){
                 this.title = '订单支付';
                 this.tip = '请尽快支付';
+            }else{
+                this.title = '订单支付';
+                this.tip = '请尽快支付';
             }
         },
 

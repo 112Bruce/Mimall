@@ -49,7 +49,8 @@ if(mock){
   require('./mock/api')
 }
 
-// 接口错误响应拦截
+// 接口错误响应拦截，第一个function拦截业务，第二个function
+// 拦截http状态码
 axios.interceptors.response.use(function(response){
   // 获取接口返回的值
   let res = response.data;
@@ -78,6 +79,10 @@ axios.interceptors.response.use(function(response){
     // 抛出错误
     return Promise.reject(res);
   }
+}, (error)=>{
+  let res = error.response;
+  Message.error(res.data.message);
+  return Promise.reject(error);
 })
 
 Vue.use(VueCookie)
