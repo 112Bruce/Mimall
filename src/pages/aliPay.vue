@@ -18,6 +18,7 @@ export default {
         orderId: this.$route.query.orderId,
         content:'',
         loading:true, //是否展示loading
+        
       }
     },
     mounted(){
@@ -38,12 +39,14 @@ export default {
           setTimeout(()=>{
             // 提交表单，submit()触发Form表单跳转
             document.forms[0].submit();
-          },500)
 
+            // 这个网址是在支付宝后台设置的，
+            // 你只需要在那个地址下进行你需要的操作即可
+          },500);
         })
-      }
+      },
+  }
     }
-}
 </script>
 
 <style>

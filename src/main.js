@@ -19,6 +19,7 @@ import VueCookie from 'vue-cookie'
 import { Message } from 'element-ui'
 // 一定要引入这个样式，否则eliment-ui无效
 import 'element-ui/lib/theme-chalk/index.css'
+import './assets/element-variables.scss'
 // ./ 表示当前目录，没有 ./ ,会认为是一个插件
 // 导入store实际上是使用Vuex
 import store from './store'

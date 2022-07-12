@@ -1,5 +1,10 @@
 <template>
   <div class="order-pay">
+    <order-header title="订单支付">
+        <template v-slot:tip>
+          <span>请尽快支付</span>
+        </template>
+    </order-header>
     <div class="wrapper">
       <div class="container">
         <div class="order-wrap">
@@ -70,6 +75,7 @@
 </template>
 
 <script>
+import OrderHeader from './../components/OrderHeader'
 import modal from '../components/modal.vue'
 import QRCode from 'qrcode';
 import ScanPayCode from '../components/ScanPayCode.vue'
@@ -78,7 +84,8 @@ export default {
     name:'orderPay',
     components:{
       ScanPayCode,
-      modal
+      modal,
+      OrderHeader
     },
     data(){
       return{
@@ -113,16 +120,21 @@ export default {
          this.showPayModal = true;
          clearInterval(this.timer);
       },
-      // 轮询当前订单支付状态
-      loopOrderState(){
-        this.timer = setInterval(()=>{
-          this.axios.get(`/orders/${this.orderId}`).then((res)=>{
+      // 判断支付状态,并进行相应处理
+      payStatusHandle(){
+        this.axios.get(`/orders/${this.orderId}`).then((res)=>{
             if(res.status == 20){
               // 已经支付
+              this.$message.success('您已支付成功')
               clearInterval(this.timer);
               this.goOrderList();
             }
           })
+      },
+      // 轮询当前订单支付状态
+      loopOrderState(){
+        this.timer = setInterval(()=>{
+           this.payStatusHandle();
         },1000)
       },
       // 跳转到订单列表
@@ -159,6 +171,8 @@ export default {
             .catch(() => {
               this.$message.error('微信二维码生成失败，请稍后重试');
             });
+         }).catch(()=>{
+           this.payStatusHandle();
          });
 
         }
