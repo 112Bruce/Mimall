@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
     @import './../assets/mixin.scss';
     @import './../assets/base.scss';
     .service{

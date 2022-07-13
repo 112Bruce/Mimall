@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 // scoped，设置的样式只对当前的文件起作用
   .footer{
     height:234px;

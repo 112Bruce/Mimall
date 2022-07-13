@@ -49,7 +49,6 @@
           <no-data v-if="!loading && list.length==0"></no-data>
           <!-- elimentui的分页器 -->
           <el-pagination
-            v-if="LoadingMethod == 1"
             class="pagination"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
@@ -57,7 +56,9 @@
             :page-sizes="pageSizes"
             :page-size="pageSize"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="total">
+            :total="total"
+            v-if="LoadingMethod == 1"
+          >
           </el-pagination>
 
           <!-- <el-pagination
@@ -87,6 +88,7 @@
             v-infinite-scroll="scrollMore"
             infinite-scroll-disabled="busy"
             infinite-scroll-distance="410"
+            v-if="LoadingMethod == 3 && list.length"
           >
             <img src="../imgs/loading-svg/loading-spinning-bubbles.svg" v-if="busy && this.hasNextPage">
           </div>
@@ -139,7 +141,7 @@ export default {
 
         hasNextPage:false, //是否有下一页
 
-        LoadingMethod:3, //加载更多页的方式, 1:分页器, 2:按钮, 3:滚动加载
+        LoadingMethod:1, //加载更多页的方式, 1:分页器, 2:按钮, 3:滚动加载
 
         busy:false, //滚动加载的停止滚动（true:不触发滚动）
       }
@@ -302,6 +304,10 @@ export default {
           // text-align: center才有效
           text-align: right;
         };
+        .el-pagination.is-background .el-pager li:not(.disabled).active{
+          background-color: #FF6600;
+          color: #FFF;
+        }
         .load-more,.scroll-more{
           text-align: center;
         }

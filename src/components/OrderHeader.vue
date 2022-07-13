@@ -10,6 +10,7 @@
             <h2>{{title}}<slot name="tip"></slot></h2>
           </div>
           <div class="username">
+            <a class="order" href="javascript:;" @click="goToList()">我的订单</a>
             <a href="javascript:;">{{username}}</a>
           </div>
        </div>
@@ -27,6 +28,11 @@ export default {
     },
     computed:{
       ...mapState(['username'])
+    },
+    methods:{
+      goToList(){
+        this.$router.push('/order/list');
+      }
     }
 }
 </script>
@@ -62,6 +68,9 @@ export default {
     }
     .username{
       float: right;
+      .order{
+        margin-right:20px;
+      }
       a{
         color: #666666;
         font-size: 16px;

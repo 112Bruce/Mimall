@@ -38,6 +38,7 @@ module.exports = {
     devServer:{
         host:'localhost',
         port:8082,
+        open:true, //自动打开浏览器
         // 因为在main.js中有： axios.defaults.baseURL = '/api'
         // 所以Request URL中加入了： /api，
         /*
@@ -68,5 +69,10 @@ module.exports = {
                 }
             }
         }
-    }
+    },
+
+    // publicPath:'/app',
+    // 关闭source-map
+    productionSourceMap:false,
+
 }

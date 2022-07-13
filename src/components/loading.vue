@@ -11,7 +11,7 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang='scss'> 
     .loading{
         height: 80px;
         line-height: 80px;

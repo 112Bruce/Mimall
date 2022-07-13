@@ -14,7 +14,7 @@
             <a href="javascript:;" v-if="username">{{username}}</a>
             <a href="javascript:;" v-if="!username" @click="login">登录</a>
             <a href="javascript:;" v-if="username" @click="logout">退出</a>
-            <a href="javascript:;" v-if="username">我的订单</a>
+            <a href="javascript:;" v-if="username" @click="gotoList">我的订单</a>
             <a href="javascript:;" class="my-cart" @click="gotoCart"><span class="icon-cart"></span>购物车{{cartCount}}</a>
           </div>
         </div>
@@ -181,6 +181,10 @@ export default {
 
         })
       },
+      gotoList(){
+         // 跳转路由
+        this.$router.push('/order/list');
+      },
       gotoCart(){
         // 跳转路由
         this.$router.push('/cart');
@@ -212,7 +216,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 // 导入样式文件
 @import './../assets/base.scss';
 @import './../assets/mixin.scss';
