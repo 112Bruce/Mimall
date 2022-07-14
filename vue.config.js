@@ -74,5 +74,8 @@ module.exports = {
     // publicPath:'/app',
     // 关闭source-map
     productionSourceMap:false,
-
+    // 删除webpack的prefetch
+    chainWebpack:(config)=>{
+        config.plugins.delete('prefetch');
+      }
 }
