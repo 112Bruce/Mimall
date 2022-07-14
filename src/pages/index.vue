@@ -123,7 +123,7 @@
     -->
     <modal 
       title="提示"
-      sureText="查看购物车" 
+      sureText="查看购物车"  
       btnType="1" 
       modalType="middle" 
       :showModal="showModal"
